@@ -97,6 +97,14 @@ pipeline {
                 }
             }
         }
+        stage("Quality Gate") {
+             steps{
+                  sleep(60)
+                  timeout(time:1 , unit: 'MINUTES'){
+                  waitForQualityGate abortPipeline: true
+                  }
+               }
+         }
         stage('Kubernetes Deploy') {
 	  agent { label 'KOPS' }
             steps {
